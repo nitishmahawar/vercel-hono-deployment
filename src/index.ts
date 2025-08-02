@@ -1,5 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import todos from "@/routes/todos";
 
 const app = new Hono();
 
@@ -7,10 +8,7 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-app.get("/api/vercel", (c) => {
-  return c.json({ message: "Hello Vercel!" });
-});
-
+app.basePath("/api").route("/todos", todos);
 serve(
   {
     fetch: app.fetch,
